@@ -11,7 +11,8 @@ notice that this script is a beta so there might be bugs i missed.
 * zip a folder with sub-folders.
 * unzip a file and auto-download it.
 * all in one file :D .
-### Soon to be:
+
+## Soon to be:
 * edit files
 * copy and move file/s
 
