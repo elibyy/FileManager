@@ -3,7 +3,7 @@ elibyy FileManager v0.4.0b
 
 This script allows you to manage your FileSystem thru the browser.
 notice that this script is a beta so there might be bugs i missed.
-### features:
+# features:
 * display all your files with there size and create date
 * secured login.
 * shows most-common mime-types for files.
@@ -18,8 +18,9 @@ notice that this script is a beta so there might be bugs i missed.
 * upload files.
 * settings.
 
-# updated
+#### updated
 * fixed bugs.
 (logout problems ,and minor bugs).
+
 thanks for visiting 
-@elibyy
+<a href="https://twitter.com/elibyy">@elibyy</a>
