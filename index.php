@@ -1,12 +1,9 @@
 <?php
-//FileSystem Challange with dj_boy
+//FileSystem Challange with ******
 //created on 24/10/2011 19:07 IST
 //elibyy 2011 (c)
 //ktnxbai
 //v 0.3.9
-//TODO
-//save files
-//edit .htaccess
 error_reporting(E_ERROR);
 class file_system{
 	var $cur_path;
@@ -105,7 +102,7 @@ class file_system{
 	$folder = isset($_GET['path']) && $_GET['path'] != '' ? $_GET['path'] : null;
 	$this->cur_path = $folder;
 	 if(!is_null($folder)&& $folder !=='')
-	$logout = isset($_SESSION['user']) ? "\n\t<form action='?logout=true&path=/' id='login'>\n <input type='submit' value='log out'>\n</form>": null;
+	$logout = isset($_SESSION['user']) ? "\n\t<div id='logout'><a href='http://$_SERVER[SERVER_NAME]$_SERVER[SCRIPT_NAME]?logout=true&path=/'>Log out</a></div>": null;
 	echo "
 	<h1>Listing Directory $folder</h1>
 	<br />
@@ -281,7 +278,7 @@ class file_system{
 	echo $this->head();
 	$this->cur_path = $_GET['path'];
 	$form = <<<eod
-			<form action="?path=$this->cur_path" method="post" id='login'>
+			<form action="?path=$this->cur_path/" method="post" id='login'>
 			<input type="text" name="user" placeholder="username" />
 			<br />
 			<input type="password" name="pw" placeholder="password" />
@@ -295,7 +292,7 @@ eod;
 	echo $form;
 	echo $this->footer();
 	}
-	elseif(htmlentities($_POST['user']) == "your user here" && sha1(htmlentities($_POST['pw'])) == "sha1(password here)"){
+	elseif(htmlentities($_POST['user']) == "elibyy" && htmlentities($_POST['pw']) == "elibyy"){
 	$_SESSION['user'] = "authed";
 	$this->cur_path=$_GET['path'];
 	header("Location: ?".$_SERVER['QUERY_STRING']);
@@ -325,6 +322,9 @@ eod;
 			tr,th,td{
 			text-align:left;
 			}
+			div#logout{
+			text-align:center;
+			}
 		</style>
 	</head>
 	<body>
@@ -345,8 +345,8 @@ eov;
 	function logout(){
 	$_SESSION = array();
 	session_destroy();
-	$file=pathinfo($_SERVER['SCRIPT_NAME']);
-	header("Location: http://".$_SERVER['HTTP_HOST'].$file['dirname']);
+	$file = pathinfo($_SERVER['PHP_SELF']);
+	header("Location:$file[dirname]?login=true");
 	}
 
 }
@@ -354,30 +354,17 @@ eov;
 $class = new file_system();
 session_name("elibyy_FS");
 session_start();
-if(!isset($_SESSION['user'])){$class->login();}
+if(!isset($_SESSION['user'])){
+$class->login();
+}
 else{
+if(isset($_GET['logout'])&&$_GET['logout'] == "true"){$class->logout();}
 	echo $class->head();
 	echo $class->load_folders();
 	echo $class->unzip_files();
 	$file = isset($_GET['f']) ? $_GET['f'] : null;
 	echo $class->zip_dir($file);
 	$dir = is_dir($file) ? $class->del_dir($file): $class->del_file($file);
-	if(!isset($_GET['path'])){
-	$folder = str_replace(basename($file)."","",$file);
-		if($dir){
-			echo "<b>$file</b> Deleted<br />";
-			echo "please wait...<br />";
-			echo "redirecting...";
-			echo "<meta http-equiv=\"refresh\" content=\"4;url=?path=$folder\">";
-		}
-		else{
-			echo "<b>$file</b> not Found! <br />" ;
-			echo "please wait...<br />";
-			echo "redirecting...";
-			echo "<meta http-equiv=\"refresh\" content=\"4;url=?path=$folder\">";
-		}
-	}
 	echo $class->footer();
 }
-if(isset($_GET['logout'])&&$_GET['logout'] == "true"){$class->logout();}
 ?>
