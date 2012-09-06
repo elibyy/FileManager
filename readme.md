@@ -13,6 +13,7 @@ notice that this script is a beta so there might be bugs i missed.
 * all in one file :D .
 
 ## Soon to be:
+### full rewrite from scrach.
 * edit files.
 * copy and move file/s.
 * upload files.
