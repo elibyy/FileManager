@@ -1,9 +1,9 @@
-elibyy FileManager v0.4.0b
+elibyy FileManager v0.5b
 ==================
-
 This script allows you to manage your FileSystem thru the browser.
 notice that this script is a beta so there might be bugs i missed.
 # features:
+### fully rewrited
 * display all your files with there size and create date
 * secured login.
 * shows most-common mime-types for files.
@@ -13,7 +13,6 @@ notice that this script is a beta so there might be bugs i missed.
 * all in one file :D .
 
 ## Soon to be:
-### full rewrite from scrach.
 * edit files.
 * copy and move file/s.
 * upload files.
@@ -22,6 +21,7 @@ notice that this script is a beta so there might be bugs i missed.
 #### updated
 * fixed bugs.
 (logout problems ,and minor bugs).
+* fixed lots of bugs such as speed and stability
 
 thanks for visiting 
-<a href="https://twitter.com/elibyy">@elibyy</a>
+<a href="https://eyurl.com">elibyy</a>
