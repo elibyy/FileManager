@@ -24,5 +24,10 @@ notice that this script is a beta so there might be bugs i missed.
 * fixed lots of bugs such as speed and stability
 * 
 
+## How To Install
+* copy index.php to somewhere in your webserver.
+* edit the settings in the end of the index.php
+* go to the index.php in your web browser
+
 thanks for visiting 
 <a href="https://eyurl.com">elibyy</a>
