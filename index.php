@@ -1,4 +1,5 @@
 <?php
+
 /*
  * FileSystem Challange with ******
  * created on 24/10/2011 19:07 IST
@@ -17,13 +18,14 @@
  * added custom path setting....
  * fixed wrong login shows empty page
  * bug fixes
+ * fixed sort by name would mess on linux
  */
 error_reporting(E_ERROR);
 
 /**
  *
  * @author elibyy
- * @version 0.6b
+ * @version 0.6.1b
  * @package FileManager
  *         
  */
@@ -63,7 +65,7 @@ class file_system{
             echo $this->dl($file);
             echo $this->unzip_files($file);
             echo $this->zip_dir($file);
-            $dir = is_dir($file) ? $this->del_dir($file) : $this->del_file($file);
+            is_dir($file) ? $this->del_dir($file) : $this->del_file($file);
         }
     }
 
@@ -153,7 +155,13 @@ class file_system{
         $file_pic = "<img src=\"data:image/jpg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBgwNDQ8PDhANDQ0MDQ0NDQ0NDQ8MDgwOFBAVFxMQEhIXJyYfFxkvGRISHy8hJicpLS0uFR4zQTAqQSYrLCkBCQoKBQUFDQUFDSkYEhgpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKf/AABEIAMwAzAMBIgACEQEDEQH/xAAcAAEAAQUBAQAAAAAAAAAAAAAABwIDBAUGCAH/xABMEAACAgACAwkLCQYDCQEAAAAAAQIDBBEFBxIGEyElMUFRdJEIGCJUYXWBk7Kz0SMyNVJTcZKxtBQkQkNyoReCwxYmM2NzlMHC8BX/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8AnEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEY6z91+kcDjqqsNc6q54WFko7EJZzdtibza6IrsOTjrJ014y/VVfA2euj6So6lD31pwsGB1kdYumfGX6qr4F6OsLS/jD9XX8DlIF+AHUx3f6W8Yfq6/gXY7vNK+MP1dfwOYgy9FgdLHd1pT7d+rr+Bcju40p9u/V1/A5yLLkWB0S3baT+3f4IfAq/210l9u/wAEPgc+mVbQG9e7XSX27/BD4FEt2+k/t36uv4Gkci1ZPgA3uj9ZWPqxS32W/wBSj8pW4xi2s+WLXIyU9FaWoxlMbqJqcJeiUJc8ZLmZ51wlm1i2vrVzXY0ze6H0/idG3b7Q+B5KyqTexbHoa6eh8wE8g1G5vdPhtJU75S8pRyVtMmt8pl0NdHQ+c24AAAAAAAAAAAAABC+un6So6lX7604WDO511PjKjqNfvrjg4MDKgy9BmNBl+DAyYsvRZjRkXYyAyYsuRkY8ZFxSAvqRVtFhSPu0BccjGxNmUWVuZi4qfABrsDLLF1vpc49sGby+vNGhqeV9T6LYf3eX/k6RoDW4PSWJwN8b8NN12Q9MZx54yXOvITPuM3c4bSteSyqxVa+Ww7fD/XD60fy5yG8XSanfrsNbG6icqrapbULIPKUX/wDcwHqAHC6vtZlOk0sPiNmnHxXzfmwxKXLKvy9Mezyd0AAAAAAAAAAAEKa7HxnR1Gv31xwUGd3rufGdHUa/f3HAQkBlwkXoyMWEi7GQGXGRdjIxYyLsZAZMZFxSNhojclj8bXvuHrhZDNxb3+uLjJc0ot5pmwWrnTH2EPX1fEDQqYczf/4daY+wj6+r4n3/AA50x9jX6+sDnXMxrnmdU9XGmPsa/wDuKzR6d0DisBOMMTGMJ2Qc4qM42ZxzyzzXlA0VvA01/DJS7HmZ890UV/Ks/FAxZxLUq0BkW7ok/wCTP8cTX36Sc+Spr/OvgXXWilxQGv2bdpShnXOLUoyjJqUZJ8DTXIz0Vqz01i8douu3FyjZdGyyrfIrZdkYZJSkvrdORAbJw1P/AERHrOI9pAduAAAAAAAAAAIP14PjOjqNfv7iP4yO+15vjSjqFfv7iPYyAyoyLsZGLGRdjIDKjIuxkYsZFxTA325vdNiNHXq2l5xeStqb8C6HQ+h9D5ictBadw+PojfRLOL4JRfBOqfPCS5meclMkzVNoTExlLGSnOrDzi64Vc2Kf12n/AAp55Ppz5s8wlIFrfBvgF0iXXE/33DdVl7xkq74RJrjn++4bqr94wOEbKGz45FDkAbKJMORblIBJk46nXxRHrOI9pEFSkTpqbfE8es4j2kB3IAAAAAAAAAAgrXs+NKOoV+/uI6jIkLXy+NcP1Cv39xHEZAZcZFyMjFjIuRkBlRmXFMxVMrUwOk3IaBekcZCnhVUflMRJcsak+FLyt5Jff5CeKdiuEYQShCEVCEY8CjFLJJeg4LVfo5UYDfmvlMZNzz596i3GC7dp+lHY7+Bn78N+MDfzht1Wst4bExpwqhbvM/3mUuGM8uWmDXI+mXSsukCSN+In1v2Z43D9U/1ZHd6G3QUY2iN1Es4vglF/PqnzwkuZ/mRzraszxtHVf9SQHGuZS5ltyKHMC45FuUilzLcpgVSkTvqYfE0es4j2kQFKRPepV8TR61ifaQHegAAAAAAAAACBNfj41w/m+v39xG0ZEjd0A+NcP5vr/UXkaRkBkxkXIzMaMitTAylMq2+AxlMq2wPQeiUqcNRWuBV0VR7IIy9/NPg8WpVVyT4JVVyXpij5jdJwoqstseUKoOcvuXMvLyL0ga7d3uueEp3imWWJxEX4S5aauRz+98KXpfMRTtn3SWlLMVfZdY/Dtlm1zRXNFeRLJGNtgbrQG6O/R9ytqecXkram/Ath0PofQ+Y2W7zTlONuw91Lzi8KlKL4JVz3yWcJLpOT2z5tgXnMpcy05lLmBccyhzLbmUOYFcpHoDUi+JY9axPtI88uR6E1HPiSPWsT7SAkAAAAAAAAAAAefu6DfG2H83V/qLyMlIkruhnxth/N1f6i8jBSAyFIrUjHUipSAyVIqUzHUipTAlvcbpbfsDUs/CoTon/l+a/wuJrNYmlXGmqhP/jTdk/6Ici/E/7HL7jtOfs2I2JvKrEZRk3yQn/DL++XpMjd7c3i4J8kaI5emcswNFtjbLG2NsC/tnzbLO2fNsC85lLmWts+OYFxzKHIocylyAqcj0RqLfEcetYr2kecnI9F6iHxHHreK9pASIAAAAAAAAAAPPHdEPjfDebq/wBReRcpEn90W+N8N5ur/UXkWKQF9SKlIsKRUpAX1IqUiwpH1SAyNo2GN0k8RVVtvO6iLrcn/Mq5Yv70816UalSPu2Be2j7tljaPu0Be2z5tlrbPm0Bd2j45FraPjkBccilyKHIpcgK3I9H6hXxFHreK9pHmtyPSeoP6Cj1vFe0gJGAAAAAAAAAAHnTujXxvhvNtX6i8ipMlTujvpjDebav1F5FOYFxSPu0W8z7mB09W4HSs4xlGmDjOMZRe/wBKzTWa5+hljF7kNIU2U12VxU8VN10pXVy2prmbT4OXnJCxVuMnhMOsJbXRYq6duVkdtOG9LgSyfPkcvdjcetK4GnGXV373bC2DrgoJbWafMvqgaK3czjYYqGElXFYi2G3CG+1tOOUnntZ5L5kuwxdJ6OuwlrpvioWRUZOKlGayks1wrgO30hiP94cJLowz9i85zd/btaSsf/Ko9gDD0PoDF47b/ZoKe9bO3nZCvLazy+c1nyM2EtwOlUm3TDJJt/L08iX3m01XX7P7X5d4/wDcytMYnTeHotuli8PKuCbcI1LacW8slnHygR9tryF/BYad91dMOGd041x6M28s35Dc6H3T4fD6Puws6XO23f8AZtSrajtwSXC+HlRe1dYPbxjufJhq24/9Sfgx/ttMDA3SbnbNHTrhZbVbKyLnlWpLZinkm8+nh7C5uc3J36RjZKudVUKXGLlbtZNtN5LLoSz9JY3XaV/asfdNPOEJbzX/AEQ4M+3afpOqw+I//O0C8vBuxMG+h7d3AuyH5AcBZkpNJqSTaUlwKST5UUORRmfNoCtyPS2oL6Bh1vE/mjzK2emdQP0DDrWJ/OIEkAAAAAAAAAADzn3R30xhvNtX6i8iglfujvpjDebav1F5FAAAAdvuk0tZDB4ferJQl8mm67Nl5b1yPI5/Q+PsnjsPO2cpyjZBbVknJpLPgzfNwmoAHb4zFp6Yw881kqMs81l823n9Je0toTD4u53SucZSjGOUXBrwVlznBADu9zMa8Jfi64z2oreMpScVteC2/wAxi9Fb5CanjcRKMlJuErYuL58sszhABvtG6WwleDsqsqU7p77sWb1CWztRSj4T4Vwm40LiP2LRllvJZapTX3vwa/j6TiS7LFWSjsuc3FZZRcpOKy5OAC/o3Db9fXX9ea2v6eWT7MzoN3Ok9t1UR+bWnY15XwRXYn2nLV2yg84uUX0xbi+1Cy2U3nJuTfPJuT7WBTmMz4AB6b1AfQMOtYn84nmQ9N6gPoGHWsT+cQJIAAAAAAAAPmZ9MDG6OlZyWSj9wEBd0c+N8N5tr/UXkUHp3dLqcw+k7VdiLrZWRrVUWpNJQUm0svvkzn7O5zwzfg4ixLtAgIE997lR4zPsHe5UeMz7AIEBPfe5UeMz7B3uVHjM+wCBAT33uVHjM+wd7lR4zPsAgQE997lR4zPsHe5UeMz7AIEBPfe5UeMz7B3uVHjM+wCBAT33uVHjM+wd7lR4zPsAgQE997lR4zPsHe5UeMz7AIEPTWoF8Qw63ifziaanudcGvn32S+55HZbmdX0NGUqii6xVKcp7LlteFLLP8kB2ALOGocFk25feXgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/9k=\" highet='22' width='27' />";
         $dir_pic = "<img src=\"data:image/jpg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAIBAQIBAQICAgICAgICAwUDAwMDAwYEBAMFBwYHBwcGBwcICQsJCAgKCAcHCg0KCgsMDAwMBwkODw0MDgsMDAz/2wBDAQICAgMDAwYDAwYMCAcIDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAz/wAARCAAbABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD9s/G2qX0Hie5js9SvbKRBHgKweLlR1RsjH0wa4HwF+1FceOLGe40vVLLUks52tbhGtwrwSqcMjABSD79CORkVu/E3WltPiLfRFsFVhP5xivkX9iHxEscnxABIKnxBIOfq9fz1nGcZhRzDFexrziozdkpO3xPpex99l2AoSoU/awT5kt0r7dz76+HPii48XeHPtdykKSiVoyIgQpxjnkn1orG/Z/vVv/Acjr0F5IP/AB1D/Wiv3Dh7EVK+WUK1Z3lKKbfd2PjcxpxhiqkIKyTdvvPC/wBsPxBe+GfF/imREurd30nzrOZQyF2W2I3RnuVcY46HFfLH7E2pRaL8HY7iQTR6nqV5PLfGZmMrurlBuDcggD8SSa/Rj9pTwlpvi74KeIk1G0juRaWM08DElXhcIfmVgQRxwcHkcHIro7/4deH9U0mDTLvRNKu7C1URQwT2qSpEo7DcDj69c89a+IzLgOeKxeInCqlztSV13bunr0ez19D3MNn6pUqcXC9lbftY+ZPhV+0bF8NLaSGBvtkt3GHuYDNvWBg7hG2Z+Qsp5P8AFsHpRX0Nof7OPgbwpez3Vj4Z0xJ7n5ZGlQzAjrgByQACOAMAZbHU5K+6yPAvA4GlhJWvFWdtr9Xst3r/AFc8HG4hV68qy6s//9k=\" />";
         if($handle = opendir($folder)){
+            $files = '';
             while(FALSE !== ($file = readdir($handle))){
+                $files[] = $file;
+            }
+            closedir($handle);
+            sort($files);
+            foreach($files as $file){
                 echo "\t<tr>\n";
                 // don't show current dir
                 if($file == ".")
@@ -213,9 +221,8 @@ class file_system{
                     }
                     echo $frow;
                 }
+                echo "</tr>";
             }
-            echo "</tr>";
-            closedir($handle);
             echo "</table>";
         }
         echo $this->footer();
@@ -499,8 +506,11 @@ eov;
 
 }
 
-$settings = array('path' => '/path/to/', // define the path by unix syntax.
-    'username' => 'elibyy', 'password' => 'elibyy', 'show_mime' => 1, 'show_actions' => 1
+$settings = array('path' => '/Users/eli/', // define the path by unix syntax.
+    'username' => 'elibyy',
+    'password' => 'elibyy',
+    'show_mime' => 1,
+    'show_actions' => 1
 );
 new file_system($settings);
 unset($_SESSION['message']);
