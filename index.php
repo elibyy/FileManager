@@ -499,7 +499,7 @@ eov;
 
 }
 
-$settings = array('path' => '/Users/eli/', // define the path by unix syntax.
+$settings = array('path' => '/path/to/', // define the path by unix syntax.
     'username' => 'elibyy', 'password' => 'elibyy', 'show_mime' => 1, 'show_actions' => 1
 );
 new file_system($settings);
