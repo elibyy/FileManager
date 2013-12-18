@@ -1,4 +1,4 @@
-elibyy FileManager v0.6b
+elibyy FileManager v0.6.1b
 ==================
 This script allows you to manage your FileSystem thru the browser.
 notice that this script is a beta so there might be bugs i missed.
@@ -22,7 +22,7 @@ notice that this script is a beta so there might be bugs i missed.
 * fixed bugs.
 (login problems, and code design).
 * fixed lots of bugs such as speed and stability
-* 
+* fixed sort by name would mess on linux
 
 ## How To Install
 * copy index.php to somewhere in your webserver.
