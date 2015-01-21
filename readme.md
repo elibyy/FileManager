@@ -1,4 +1,4 @@
-elibyy FileManager v0.6.1b
+elibyy FileManager v0.7.0b
 ==================
 This script allows you to manage your FileSystem thru the browser.
 notice that this script is a beta so there might be bugs i missed.
@@ -11,7 +11,7 @@ notice that this script is a beta so there might be bugs i missed.
 * zip a folder with sub-folders , and auto-download it.
 * unzip a file with sub-folders and files.
 * all in one file :D .
-* settings (for now user,password,show mime type,show actions,custom path)
+* settings (for now user,password,show mime type,show actions,custom start path)
 
 ## Soon to be:
 * edit files.
@@ -23,6 +23,7 @@ notice that this script is a beta so there might be bugs i missed.
 (login problems, and code design).
 * fixed lots of bugs such as speed and stability
 * fixed sort by name would mess on linux
+* rescrapped the file based on the existed file
 
 ## How To Install
 * copy index.php to somewhere in your webserver.
